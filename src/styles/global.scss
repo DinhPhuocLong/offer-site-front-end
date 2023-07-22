@@ -1,0 +1,132 @@
+html {
+    height: 100%;
+    width: 100%;
+    font-size: vw($df-fs, 1920);
+
+    @media (max-width: 991px) {
+        font-size: vw($df-fs, 991);
+    }
+
+    @media (max-width: 575px) {
+        font-size: vw($df-fs, 575);
+    }
+
+    @media (min-width: 1920px) {
+        font-size: 16px;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5F5;
+}
+
+.container {
+    max-width: rem(1140);
+    padding-left: rem(10);
+    padding-right: rem(10);
+    margin: auto;
+
+    @media (max-width: $screen-mobile) {
+        max-width: 100%;
+        padding-left: rem(20);
+        padding-right: rem(20);
+    }
+
+    .v-row {
+        margin-right: rem(-10);
+        margin-left: rem(-10);
+
+        @media (max-width: $screen-mobile) {
+            margin-right: rem(-20);
+            margin-left: rem(-20)
+        }
+    }
+
+    [class^="v-col-"],
+    [class*=" v-col-"] {
+        padding-right: rem(10);
+        padding-left: rem(10);
+
+        @media (max-width: $screen-mobile) {
+            padding-right: rem(20);
+            padding-left: rem(20);
+        }
+
+        &.no-padding {
+            padding: 0;
+        }
+    }
+
+}
+
+.visible-desktop {
+    @media(max-width: $screen-mobile) {
+        display: none !important;
+    }
+}
+
+.visible-mobi {
+    @media(min-width: $screen-mw-desktop) {
+        display: none !important;
+    }
+}
+
+.user-select-none {
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+img,
+img.img-responsive {
+    max-width: none;
+    width: 100%;
+    height: auto;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+dl,
+ol,
+ul {
+    margin-bottom: 0;
+}
+
+*:focus {
+    outline: none;
+}
+
+[type=reset],
+[type=submit],
+button,
+html [type=button] {
+    -webkit-appearance: none;
+}
+
+.clearfix {
+
+    &::before,
+    &::after {
+        display: block;
+        clear: both;
+        content: "";
+    }
+}

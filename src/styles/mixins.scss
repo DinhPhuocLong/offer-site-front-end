@@ -1,0 +1,12 @@
+
+//mixins
+
+@function rem($size) {
+    $remValue: calc($size / 16) + rem;
+    @return $remValue;
+}
+
+@function vw($size, $width) {
+    $vwValue: calc($size / $width * 100) + vw;
+    @return $vwValue;
+}
