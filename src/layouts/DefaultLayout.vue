@@ -8,23 +8,28 @@
                             Superlead
                         </div>
 
-                        <div class="pinned-message">
+                        <!-- <div class="pinned-message">
                             Put something here !
-                        </div>
+                        </div> -->
 
                         <div class="user">
                             <div class="text-center">
                                 <v-menu :location="location">
                                     <template v-slot:activator="{ props }">
                                         <v-btn class="profile transparent-overlay" :ripple="false" v-bind="props">
-                                            <span class="user-name">Admin</span>
+                                            <span class="user-name">{{ authUser?.name }}</span>
                                             <v-icon :icon="mdiChevronDown" />
                                         </v-btn>
                                     </template>
 
-                                    <v-list>
-                                        <v-list-item v-for="(item, index) in items" :key="index">
-                                            <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                    <v-list class="list-item">
+                                        <v-list-item>
+                                            <router-link to="/profile">
+                                                <v-list-item-title>Profile</v-list-item-title>
+                                            </router-link>
+                                            <router-link to="">
+                                                <v-list-item-title @click="handleLogout">Logout</v-list-item-title>
+                                            </router-link>
                                         </v-list-item>
                                     </v-list>
                                 </v-menu>
@@ -49,17 +54,35 @@
 </template>
 
 <script setup>
-import { mdiChevronDown } from '@mdi/js';
 import SideBar from '@/components/SideBar.vue';
-import { ref } from 'vue';
-const items = ref([
-    { title: 'Change Password' },
-    { title: 'Log Out' },
-]);
+import { logout } from '@/services/AuthService';
+import { mdiChevronDown } from '@mdi/js';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
 const location = ref('bottom');
+
+store.dispatch('getAuthUser');
+
+const authUser = computed(() => {
+    return store.getters.getAuthUser;
+});
+
+
+const handleLogout = async () => {
+    try {
+        await logout();
+    } catch (error) {
+        console.log(error);
+    }
+} 
 </script>
 
 <style lang="scss" scoped>
+main {
+    margin-left: rem(230);
+}
+
 header {
     background-color: #fff;
     box-shadow: 0 4px 10px hsla(0, 0%, 71.4%, .18);
@@ -115,7 +138,17 @@ header {
     }
 }
 
-main {
-    margin-left: rem(230);
+.list-item {
+    width: rem(120);
+    a {
+        display: block;
+        color: black;
+        text-decoration: none;
+        margin-bottom: rem(10);
+        &:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+    }
 }
 </style>

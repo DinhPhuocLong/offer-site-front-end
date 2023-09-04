@@ -5,16 +5,23 @@
         </div>
         <ul class="menu">
             <li class="menu-item" v-for="(item, i) in items" :key="i">
-                <router-link :to="item.to ? item.to : ''" @click="toggleSubmenu(i)">
+                <router-link :to="item.to" @click="toggleSubmenu(i)" v-if="item.to" active-class="active" exact>
                     <v-icon v-if="item.icon" :icon="item.icon"></v-icon>
                     <span>
                         {{ item.text }}
                     </span>
                     <v-icon v-if="item.subItems" :icon="mdiChevronDown" :class="{ 'rotate': item.isActive }"></v-icon>
                 </router-link>
+                <span @click="toggleSubmenu(i)" v-else>
+                    <v-icon v-if="item.icon" :icon="item.icon"></v-icon>
+                    <span>
+                        {{ item.text }}
+                    </span>
+                    <v-icon v-if="item.subItems" :icon="mdiChevronDown" :class="{ 'rotate': item.isActive }"></v-icon>
+                </span>
                 <ul class="sub-menu" v-if="item.isActive">
                     <li class="sub-menu-item" v-for="(subItem, j) in item.subItems" :key="j">
-                        <router-link :to="subItem.to">
+                        <router-link :to="subItem.to" active-class="active" exact>
                             <v-icon v-if="subItem.icon" :icon="subItem.icon"></v-icon>
                             {{ subItem.text }}
                         </router-link>
@@ -47,8 +54,8 @@ const items = ref([
     {
         text: 'Offers', icon: mdiBookmarkOutline, isActive: false,
         subItems: [
-            { text: 'Add Offer', to: '/add-offer' },
-            { text: 'List Offer', to: '/list-offer' },
+            { text: 'Add Offer', to: '/offer/add' },
+            { text: 'List Offer', to: '/offer' },
         ],
     },
     {
@@ -78,6 +85,10 @@ const toggleSubmenu = (index) => {
 </script>
 
 <style lang="scss" scoped>
+.router-link-exact-active {  // highlight active route
+    color: black !important;
+    font-weight: 600;
+}
 .side-bar {
     width: rem(230);
     height: 100vh;
@@ -85,6 +96,7 @@ const toggleSubmenu = (index) => {
     box-shadow: 0 4px 10px hsla(0, 0%, 71.4%, 0.18);
     background-color: #FFFF;
     padding-left: rem(20);
+    user-select: none;
 
     .side-bar-title {
         font-size: rem(18);
@@ -104,6 +116,17 @@ const toggleSubmenu = (index) => {
                 margin-right: rem(20);
             }
 
+            span {
+                display: flex;
+                font-size: rem(16);
+                color: rgb(43, 42, 42);
+                text-decoration: none;
+                align-items: center;
+
+                span {
+                    flex-grow: 1;
+                }
+            }
             a {
                 display: flex;
                 font-size: rem(16);
